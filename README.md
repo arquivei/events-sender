@@ -57,3 +57,6 @@ $sender->push($message, $stream);
 ## Run Tests
 
 `$ vendor/phpunit/phpunit/phpunit tests`
+
+## TODO
+- Create entities of configuration the sender
