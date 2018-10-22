@@ -1,0 +1,30 @@
+{
+  "name": "arquivei/events-sender",
+  "description": "Applications events sender",
+  "license": "Apache-2.0",
+  "keywords": [
+    "events",
+    "kafka",
+    "log",
+    "kinesis",
+    "sender"
+  ],
+  "require": {
+    "php": "^7.1.3",
+    "aws/aws-sdk-php": "^3.0.0",
+    "monolog/monolog": "^1.23",
+    "robinvdvleuten/ulid": "^1.1",
+    "nesbot/carbon": "^2.4"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Arquivei\\Events\\Sender\\": "src/",
+      "Arquivei\\Events\\Sender\\Tests\\": "tests/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
