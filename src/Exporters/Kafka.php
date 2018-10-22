@@ -4,7 +4,7 @@ namespace Arquivei\Events\Sender\Exporters;
 
 use Arquivei\Events\Sender\Message;
 use Arquivei\Events\Sender\Interfaces\ExporterInterface;
-use Arquivei\Events\Sender\Exceptions\SenderToKafkaException;
+use Arquivei\Events\Sender\Exceptions\FailedSenderToKafkaException;
 
 class Kafka implements ExporterInterface
 {
@@ -22,7 +22,7 @@ class Kafka implements ExporterInterface
             $topic = $this->producer->newTopic($stream);
             $topic->produce(RD_KAFKA_PARTITION_UA, 0, $message->toJson());
         } catch (\Exception $exception) {
-            throw new SenderToKafkaException(
+            throw new FailedSenderToKafkaException(
                 'Failed to push message to Kafka: ' . $exception->getMessage(),
                 $exception
             );

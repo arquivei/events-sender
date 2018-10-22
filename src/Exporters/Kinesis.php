@@ -6,7 +6,7 @@ use Aws\Kinesis\KinesisClient;
 use Aws\Credentials\Credentials;
 use Arquivei\Events\Sender\Message;
 use Arquivei\Events\Sender\Interfaces\ExporterInterface;
-use Arquivei\Events\Sender\Exceptions\SenderToKinesisException;
+use Arquivei\Events\Sender\Exceptions\FailedSenderToKinesisException;
 
 class Kinesis implements ExporterInterface
 {
@@ -34,7 +34,7 @@ class Kinesis implements ExporterInterface
                 "PartitionKey" => $message->getId()
             ]);
         } catch (\Exception $exception) {
-            throw new SenderToKinesisException(
+            throw new FailedSenderToKinesisException(
                 'Failed to push message to Kinesis: ' . $exception->getMessage(),
                 $exception
             );

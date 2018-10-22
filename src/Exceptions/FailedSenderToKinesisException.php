@@ -4,10 +4,10 @@ namespace Arquivei\Events\Sender\Exceptions;
 
 use Throwable;
 
-class SenderToKafkaException extends \Exception
+class FailedSenderToKinesisException extends \Exception
 {
     public function __construct(
-        string $message = 'Failed to push message to Kafka',
+        string $message = 'Failed to push message to Kinesis',
         Throwable $previous = null,
         int $code = 0
     ) {

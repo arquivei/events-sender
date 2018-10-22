@@ -7,7 +7,7 @@ use Monolog\Handler\StreamHandler;
 use Arquivei\Events\Sender\Message;
 use Monolog\Formatter\JsonFormatter;
 use Arquivei\Events\Sender\Interfaces\ExporterInterface;
-use Arquivei\Events\Sender\Exceptions\SenderToLogException;
+use Arquivei\Events\Sender\Exceptions\FailedSenderToLogException;
 
 class File implements ExporterInterface
 {
@@ -34,7 +34,7 @@ class File implements ExporterInterface
                 'EventPipelineType' => $message->getDataType(),
             ]);
         } catch (\Exception $exception) {
-            throw new SenderToLogException(
+            throw new FailedSenderToLogException(
                 'Failed to push message to Log: ' . $exception->getMessage(),
                 $exception
             );

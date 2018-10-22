@@ -4,7 +4,7 @@ namespace Arquivei\Events\Sender\Exceptions;
 
 use Throwable;
 
-class SenderToLogException extends \Exception
+class FailedSenderToLogException extends \Exception
 {
     public function __construct(
         string $message = 'Failed to push message to Log',
