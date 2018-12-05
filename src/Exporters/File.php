@@ -13,11 +13,11 @@ class File implements ExporterInterface
 {
     private $log;
 
-    public function __construct(array $config)
+    public function __construct(string $filePath)
     {
-        $handler = new StreamHandler($config['file_path']);
+        $handler = new StreamHandler($filePath);
         $handler->setFormatter(new JsonFormatter());
-        $this->log = new Logger('events_sender_file');
+        $this->log = new Logger('arquivei_events_sender');
         $this->log->pushHandler($handler);
         $this->log->pushProcessor(function ($record) {
             $record['datetime'] = $record['datetime']->format('c');
@@ -28,7 +28,7 @@ class File implements ExporterInterface
     public function push(Message $message, string $stream): void
     {
         try {
-            $this->log->addInfo('events_sender_file', [
+            $this->log->addInfo('Arquivei events sender', [
                 'EventPipelineStream' => $stream,
                 'EventPipelineMessage' => $message->toArray(),
                 'EventPipelineType' => $message->getDataType(),
