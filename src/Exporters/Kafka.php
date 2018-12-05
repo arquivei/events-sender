@@ -39,7 +39,6 @@ class Kafka implements ExporterInterface
         $conf->set('group.id', $config['group_id']);
         $conf->set('metadata.broker.list', $config['kafka_brokers']);
         $conf->set('enable.auto.commit', "false");
-        $conf->set('offset.store.method', 'broker');
         $conf->set('security.protocol', $config['security_protocol']);
         $conf->set('sasl.mechanisms', $config['sasl_mechanisms']);
         $conf->set('sasl.username', $config['sasl_username']);
