@@ -2,8 +2,8 @@
 
 namespace Arquivei\Events\Sender;
 
+use Ulid\Ulid;
 use Carbon\Carbon;
-use Ramsey\Uuid\Uuid;
 
 class Message
 {
@@ -27,7 +27,7 @@ class Message
         $this->data = $data;
         $this->source = $source;
         $this->dataType = $dataType;
-        $this->id = Uuid::uuid4()->toString();
+        $this->id = Ulid::generate();
         $this->isTracking = $isTracking;
         $this->dataVersion = $dataVersion;
         $this->createdAt = Carbon::now()->toRfc3339String();
