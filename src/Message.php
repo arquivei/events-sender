@@ -27,7 +27,7 @@ class Message
         $this->data = $data;
         $this->source = $source;
         $this->dataType = $dataType;
-        $this->id = Ulid::generate();
+        $this->id = (string)Ulid::generate();
         $this->isTracking = $isTracking;
         $this->dataVersion = $dataVersion;
         $this->createdAt = Carbon::now()->toRfc3339String();
