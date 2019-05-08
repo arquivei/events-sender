@@ -8,6 +8,8 @@ use Arquivei\Events\Sender\Exceptions\FailedSenderToKafkaException;
 
 class Kafka implements ExporterInterface
 {
+    private $topic;
+    private $stream;
     private $producer;
 
     public function __construct(array $config)
@@ -18,8 +20,7 @@ class Kafka implements ExporterInterface
     public function push(Message $message, string $stream): void
     {
         try {
-            $this->producer->setLogLevel(LOG_DEBUG);
-            $topic = $this->producer->newTopic($stream);
+            $topic = $this->getTopic($stream);
             $topic->produce(RD_KAFKA_PARTITION_UA, 0, $message->toJson());
         } catch (\Exception $exception) {
             throw new FailedSenderToKafkaException(
@@ -31,19 +32,26 @@ class Kafka implements ExporterInterface
 
     private function setConf(array $config): \RdKafka\Conf
     {
-        $topicConf = new \RdKafka\TopicConf();
-        $topicConf->set('auto.offset.reset', 'largest');
-
         $conf = new \RdKafka\Conf();
-        $conf->setDefaultTopicConf($topicConf);
         $conf->set('group.id', $config['group_id']);
         $conf->set('metadata.broker.list', $config['kafka_brokers']);
-        $conf->set('enable.auto.commit', "false");
         $conf->set('security.protocol', $config['security_protocol']);
+        $conf->set('acks', 'all');
         $conf->set('sasl.mechanisms', $config['sasl_mechanisms']);
         $conf->set('sasl.username', $config['sasl_username']);
         $conf->set('sasl.password', $config['sasl_password']);
 
         return $conf;
+    }
+
+    private function getTopic(string $stream): \RdKafka\ProducerTopic
+    {
+        if ($this->stream !== $stream || is_null($this->topic)) {
+            $this->stream = $stream;
+            $this->topic = $this->producer->newTopic($stream);
+            return $this->topic;
+        }
+
+        return $this->topic;
     }
 }
