@@ -3,7 +3,6 @@
 namespace Arquivei\Events\Sender;
 
 use Ulid\Ulid;
-use Carbon\Carbon;
 
 class Message
 {
@@ -30,7 +29,7 @@ class Message
         $this->id = (string)Ulid::generate();
         $this->isTracking = $isTracking;
         $this->dataVersion = $dataVersion;
-        $this->createdAt = Carbon::now()->toRfc3339String();
+        $this->createdAt = (new \DateTime())->format(\DateTime::RFC3339);
     }
 
     public function getId(): string
