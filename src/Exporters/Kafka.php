@@ -17,11 +17,11 @@ class Kafka implements ExporterInterface
         $this->producer = new \RdKafka\Producer($this->setConf($config));
     }
 
-    public function push(Message $message, string $stream): void
+    public function push(Message $message, string $stream, string $key = null): void
     {
         try {
             $topic = $this->getTopic($stream);
-            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $message->toJson());
+            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $message->toJson(), $key);
         } catch (\Exception $exception) {
             throw new FailedSenderToKafkaException(
                 'Failed to push message to Kafka: ' . $exception->getMessage(),
@@ -34,6 +34,7 @@ class Kafka implements ExporterInterface
     {
         $conf = new \RdKafka\Conf();
         $conf->set('group.id', $config['group_id']);
+        $conf->set('compression.codec', 'gzip');
         $conf->set('metadata.broker.list', $config['kafka_brokers']);
         $conf->set('security.protocol', $config['security_protocol']);
         $conf->set('acks', 'all');
