@@ -17,7 +17,7 @@ class Kafka implements ExporterInterface
         $this->producer = new \RdKafka\Producer($this->setConf($config));
     }
 
-    public function push(Message $message, string $stream, string $key = null): void
+    public function push(Message $message, string $stream, ?string $key): void
     {
         try {
             $topic = $this->getTopic($stream);

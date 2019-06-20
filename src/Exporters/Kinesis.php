@@ -25,13 +25,13 @@ class Kinesis implements ExporterInterface
         ]);
     }
 
-    public function push(Message $message, string $stream): void
+    public function push(Message $message, string $stream, ?string $key): void
     {
         try {
             $this->client->putRecord([
                 "StreamName" => $stream,
                 "Data" => $message->toJson(),
-                "PartitionKey" => $message->getId()
+                "PartitionKey" => $key ? $key : $message->getId()
             ]);
         } catch (\Exception $exception) {
             throw new FailedSenderToKinesisException(

@@ -6,5 +6,5 @@ use Arquivei\Events\Sender\Message;
 
 interface ExporterInterface
 {
-    public function push(Message $message, string $stream): void;
+    public function push(Message $message, string $stream, ?string $key): void;
 }

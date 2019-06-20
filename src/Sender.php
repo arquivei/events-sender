@@ -15,14 +15,14 @@ class Sender
         $this->exporters = $exporters;
     }
 
-    public function push(Message $message, string $stream): void
+    public function push(Message $message, string $stream, string $key = null): void
     {
         if (empty($this->exporters)) {
             throw new EmptyExportersException();
         }
         foreach ($this->exporters as $exporter) {
             try {
-                $exporter->push($message, $stream);
+                $exporter->push($message, $stream, $key);
                 return;
             } catch (\Exception $exception) {
                 continue;

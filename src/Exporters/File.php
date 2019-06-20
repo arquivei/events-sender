@@ -25,10 +25,11 @@ class File implements ExporterInterface
         });
     }
 
-    public function push(Message $message, string $stream): void
+    public function push(Message $message, string $stream, ?string $key): void
     {
         try {
             $this->log->addInfo('Arquivei events sender', [
+                'Key' => $key,
                 'EventPipelineStream' => $stream,
                 'EventPipelineMessage' => $message->toArray(),
                 'EventPipelineType' => $message->getDataType(),
