@@ -3,6 +3,7 @@
 namespace Arquivei\Events\Sender;
 
 use Arquivei\Events\Sender\Interfaces\ExporterInterface;
+use Arquivei\Events\Sender\Exceptions\SendEventException;
 use Arquivei\Events\Sender\Exceptions\EmptyExportersException;
 
 class Sender
@@ -27,5 +28,7 @@ class Sender
                 continue;
             }
         }
+
+        throw new SendEventException();
     }
 }
