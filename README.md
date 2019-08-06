@@ -7,7 +7,22 @@ Applications events sender
     
 ## Usage
 
-Create you exporter and pass for Sender class
+Create your exporter and pass for Sender class
+
+You can use the entities schemas:
+```php
+<?php
+
+$exporter = new \Arquivei\Events\Sender\Exporters\File('filePath');
+
+$sender = new \Arquivei\Events\Sender\Sender($exporter);
+
+/**
+ * @param \Arquivei\Events\Sender\Schemas\ClassicSchema $schema
+ * @param string $stream
+ */
+$sender->push($schema, $stream);
+```
 
 ```php
 <?php
@@ -17,10 +32,38 @@ $exporter = new \Arquivei\Events\Sender\Exporters\File('filePath');
 $sender = new \Arquivei\Events\Sender\Sender($exporter);
 
 /**
- * @param \Arquivei\Events\Sender\Message $message
+ * @param \Arquivei\Events\Sender\Schemas\LatestSchema $schema
  * @param string $stream
  */
-$sender->push($message, $stream);
+$sender->push($schema, $stream);
+```
+Or use the factories:
+```php
+<?php
+
+$exporter = new \Arquivei\Events\Sender\Exporters\File('filePath');
+
+$sender = new \Arquivei\Events\Sender\Sender($exporter);
+
+/**
+ * @param \Arquivei\Events\Sender\Factories\LatestSchemaFactory $schema
+ * @param string $stream
+ */
+$sender->push($schema, $stream);
+```
+
+```php
+<?php
+
+$exporter = new \Arquivei\Events\Sender\Exporters\File('filePath');
+
+$sender = new \Arquivei\Events\Sender\Sender($exporter);
+
+/**
+ * @param \Arquivei\Events\Sender\Factories\ClassicSchemaFactory $schema
+ * @param string $stream
+ */
+$sender->push($schema, $stream);
 ```
 
 ## Important
