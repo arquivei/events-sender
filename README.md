@@ -17,10 +17,28 @@ $exporter = new \Arquivei\Events\Sender\Exporters\File('filePath');
 $sender = new \Arquivei\Events\Sender\Sender($exporter);
 
 /**
- * @param \Arquivei\Events\Sender\Message $message
+ * @param \Arquivei\Events\Sender\Schemas\BaseSchema $schema
  * @param string $stream
  */
-$sender->push($message, $stream);
+$sender->push($schema, $stream);
+```
+You can use the schemas:
+```php
+<?php
+/**
+ * @param \Arquivei\Events\Sender\Schemas\ClassicSchema $schema
+ *OR
+ * @param \Arquivei\Events\Sender\Schemas\LatestSchema $schema
+ */
+```
+Or use the factories:
+```php
+<?php
+/**
+ * @param \Arquivei\Events\Sender\Factories\ClassicSchemaFactory $schema
+ *OR
+ * @param \Arquivei\Events\Sender\Factories\LatestSchemaFactory $schema
+ */
 ```
 
 ## Important
