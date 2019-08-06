@@ -2,9 +2,10 @@
 
 namespace Arquivei\Events\Sender;
 
-use Arquivei\Events\Sender\Interfaces\ExporterInterface;
 use Arquivei\Events\Sender\Exceptions\SendEventException;
 use Arquivei\Events\Sender\Exceptions\EmptyExportersException;
+use Arquivei\Events\Sender\Exporters\ExporterInterface;
+use Arquivei\Events\Sender\Schemas\BaseSchema;
 
 class Sender
 {
@@ -15,14 +16,15 @@ class Sender
         $this->exporters = $exporters;
     }
 
-    public function push(Message $message, string $stream, string $key = null): void
+    public function push(BaseSchema $schema, string $stream, string $key = null): void
     {
         if (empty($this->exporters)) {
             throw new EmptyExportersException();
         }
+
         foreach ($this->exporters as $exporter) {
             try {
-                $exporter->push($message, $stream, $key);
+                $exporter->push($schema, $stream, $key);
                 return;
             } catch (\Exception $exception) {
                 continue;

@@ -2,9 +2,8 @@
 
 namespace Arquivei\Events\Sender\Exporters;
 
-use Arquivei\Events\Sender\Message;
-use Arquivei\Events\Sender\Interfaces\ExporterInterface;
 use Arquivei\Events\Sender\Exceptions\FailedSenderToKafkaException;
+use Arquivei\Events\Sender\Schemas\BaseSchema;
 
 class Kafka implements ExporterInterface
 {
@@ -17,11 +16,11 @@ class Kafka implements ExporterInterface
         $this->producer = new \RdKafka\Producer($this->setConf($config));
     }
 
-    public function push(Message $message, string $stream, ?string $key): void
+    public function push(BaseSchema $schema, string $stream, ?string $key): void
     {
         try {
             $topic = $this->getTopic($stream);
-            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $message->toJson(), $key);
+            $topic->produce(RD_KAFKA_PARTITION_UA, 0, $schema->getParser()->toJson(), $key);
         } catch (\Exception $exception) {
             throw new FailedSenderToKafkaException(
                 'Failed to push message to Kafka: ' . $exception->getMessage(),
