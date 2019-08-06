@@ -2,11 +2,10 @@
 
 namespace Arquivei\Events\Sender\Exporters;
 
+use Arquivei\Events\Sender\Schemas\BaseSchema;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
-use Arquivei\Events\Sender\Message;
 use Monolog\Formatter\JsonFormatter;
-use Arquivei\Events\Sender\Interfaces\ExporterInterface;
 use Arquivei\Events\Sender\Exceptions\FailedSenderToLogException;
 
 class File implements ExporterInterface
@@ -25,14 +24,14 @@ class File implements ExporterInterface
         });
     }
 
-    public function push(Message $message, string $stream, ?string $key): void
+    public function push(BaseSchema $schema, string $stream, ?string $key): void
     {
         try {
             $this->log->addInfo('Arquivei events sender', [
                 'Key' => $key,
                 'EventPipelineStream' => $stream,
-                'EventPipelineMessage' => $message->toArray(),
-                'EventPipelineType' => $message->getDataType(),
+                'EventPipelineMessage' => $schema->getParser()->toArray(),
+                'EventPipelineType' => $schema->getType(),
             ]);
         } catch (\Exception $exception) {
             throw new FailedSenderToLogException(

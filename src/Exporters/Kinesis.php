@@ -2,10 +2,9 @@
 
 namespace Arquivei\Events\Sender\Exporters;
 
+use Arquivei\Events\Sender\Schemas\BaseSchema;
 use Aws\Kinesis\KinesisClient;
 use Aws\Credentials\Credentials;
-use Arquivei\Events\Sender\Message;
-use Arquivei\Events\Sender\Interfaces\ExporterInterface;
 use Arquivei\Events\Sender\Exceptions\FailedSenderToKinesisException;
 
 class Kinesis implements ExporterInterface
@@ -25,13 +24,13 @@ class Kinesis implements ExporterInterface
         ]);
     }
 
-    public function push(Message $message, string $stream, ?string $key): void
+    public function push(BaseSchema $schema, string $stream, ?string $key): void
     {
         try {
             $this->client->putRecord([
                 "StreamName" => $stream,
-                "Data" => $message->toJson(),
-                "PartitionKey" => $key ? $key : $message->getId()
+                "Data" => $schema->getParser()->toJson(),
+                "PartitionKey" => $key ? $key : $schema->getId()
             ]);
         } catch (\Exception $exception) {
             throw new FailedSenderToKinesisException(
