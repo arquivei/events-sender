@@ -15,7 +15,7 @@ class LatestParser implements ParserInterface
         $this->schema = $schema;
     }
 
-    public function parse(): LatestParser
+    public function parse(): ParserInterface
     {
         $this->parse = [
             "SchemaVersion" => $this->schema->getSchemaVersion(),
@@ -35,7 +35,7 @@ class LatestParser implements ParserInterface
         return $this->parse;
     }
 
-    public function toJson()
+    public function toJson(): string
     {
         return json_encode($this->parse);
     }
