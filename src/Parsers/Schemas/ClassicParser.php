@@ -15,7 +15,7 @@ class ClassicParser implements ParserInterface
         $this->schema = $schema;
     }
 
-    public function parse(): ClassicParser
+    public function parse(): ParserInterface
     {
         $this->parse = [
             "SchemaVersion" => $this->schema->getSchemaVersion(),
