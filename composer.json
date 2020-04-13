@@ -11,13 +11,15 @@
   ],
   "require": {
     "php": "^7.1.3",
-    "aws/aws-sdk-php": "^3.0.0",
     "monolog/monolog": "^1.23",
-    "robinvdvleuten/ulid": "^3.0",
-    "google/cloud-pubsub": "1.17.*"
+    "robinvdvleuten/ulid": "^3.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^7.0"
+  },
+  "suggest": {
+    "aws/aws-sdk-php": "^3.0",
+    "google/cloud-pubsub": "^1.21"
   },
   "autoload": {
     "psr-4": {
