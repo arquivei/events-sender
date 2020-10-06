@@ -28,5 +28,12 @@
     }
   },
   "minimum-stability": "dev",
-  "prefer-stable": true
+  "prefer-stable": true,
+  "scripts": {
+    "tests": "./vendor/bin/phpunit tests/",
+    "coverage": "./vendor/bin/phpunit --whitelist tests/ --coverage-html tests/coverage/",
+    "check": [
+      "@tests"
+    ]
+  }
 }
