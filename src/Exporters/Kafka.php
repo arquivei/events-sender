@@ -32,7 +32,6 @@ class Kafka implements ExporterInterface
     private function setConf(array $config): \RdKafka\Conf
     {
         $conf = new \RdKafka\Conf();
-        $conf->set('group.id', $config['group_id']);
         $conf->set('compression.codec', 'gzip');
         $conf->set('metadata.broker.list', $config['kafka_brokers']);
         $conf->set('security.protocol', $config['security_protocol']);
