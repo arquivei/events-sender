@@ -10,10 +10,12 @@ class Kafka implements ExporterInterface
     private $topic;
     private $stream;
     private $producer;
+    private $timeout;
 
     public function __construct(array $config)
     {
         $this->producer = new \RdKafka\Producer($this->setConf($config));
+        $this->timeout = $config['flush_timeout'] ?? 30000;
     }
 
     public function push(BaseSchema $schema, string $stream, ?string $key): void
@@ -21,6 +23,10 @@ class Kafka implements ExporterInterface
         try {
             $topic = $this->getTopic($stream);
             $topic->produce(RD_KAFKA_PARTITION_UA, 0, $schema->getParser()->toJson(), $key);
+
+            if (method_exists($this->producer, 'flush')) {
+                $this->producer->flush($this->timeout);
+            }
         } catch (\Exception $exception) {
             throw new FailedSenderToKafkaException(
                 'Failed to push message to Kafka: ' . $exception->getMessage(),
