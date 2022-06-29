@@ -1,6 +1,6 @@
 <?php
 
-namespace Arquivei\Events\Sender\Tests;
+namespace Arquivei\Events\Sender\Tests\Exporters;
 
 use PHPUnit\Framework\TestCase;
 use Arquivei\Events\Sender\Exporters\Kinesis;
