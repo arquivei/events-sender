@@ -11,7 +11,7 @@
   ],
   "require": {
     "php": "^7.3 || ^8.0",
-    "monolog/monolog": "^2.0",
+    "monolog/monolog": "^3.0",
     "robinvdvleuten/ulid": "^4.0 || ^5.0"
   },
   "require-dev": {
