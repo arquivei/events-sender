@@ -10,6 +10,7 @@ use Arquivei\Events\Sender\Schemas\BaseSchema;
 class Sender
 {
     private $exporters;
+    private ?LogInterface $logger = null;
 
     public function __construct(ExporterInterface ... $exporters)
     {
@@ -27,10 +28,22 @@ class Sender
                 $exporter->push($schema, $stream, $key);
                 return;
             } catch (\Exception $exception) {
+                if ($this->logger) {
+                    $this->logger->error(
+                        'ArquiveiEventSender: Error while pushing message', 
+                        ['exception' => $exception]
+                    );
+                }
+
                 continue;
             }
         }
 
         throw new SendEventException();
+    }
+
+    public function setLogger(LogInterface $logger) {
+        $this->logger = $logger;
+        return $this;
     }
 }
