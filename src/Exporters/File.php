@@ -27,7 +27,7 @@ class File implements ExporterInterface
     public function push(BaseSchema $schema, string $stream, ?string $key): void
     {
         try {
-            $this->log->addInfo('Arquivei events sender', [
+            $this->log->info('Arquivei events sender', [
                 'Key' => $key,
                 'EventPipelineStream' => $stream,
                 'EventPipelineMessage' => $schema->getParser()->toArray(),
