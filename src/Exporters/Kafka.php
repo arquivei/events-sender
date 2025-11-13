@@ -46,7 +46,7 @@ class Kafka implements ExporterInterface
         $conf->set('sasl.username', $config['sasl_username']);
         $conf->set('sasl.password', $config['sasl_password']);
 
-        if (isset($config['ssl_ca_location']) && $config['ssl_ca_location'] !== '') {
+        if (!empty($config['ssl_ca_location'])) {
             $conf->set('ssl.ca.location', $config['ssl_ca_location']);
         }
 
