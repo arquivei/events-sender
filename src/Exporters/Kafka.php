@@ -50,7 +50,7 @@ class Kafka implements ExporterInterface
             $conf->set('ssl.ca.location', $config['ssl_ca_location']);
         }
 
-        if(isset($config['message_max_bytes']) && $config['message_max_bytes'] !== '') {
+        if (isset($config['message_max_bytes']) && $config['message_max_bytes'] !== '') {
             $conf->set('message.max.bytes', $config['message_max_bytes']);
         }
         
